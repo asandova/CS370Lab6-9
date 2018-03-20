@@ -1,0 +1,202 @@
+%{
+	/*
+	* Class: CS370
+	* Assignment: Lab5
+	* File: Lab5.y
+	* Name: August B. Sandoval
+	* Data: 2/25/18
+	*
+	* Lab5.y does not provide any sematic action for its rules. The puropse of this lab
+	* was just syntax checking.
+	*/
+
+	/* begin specs */
+#include <stdio.h>
+#include <ctype.h>
+//#include "lex.yy.c"
+//#include "symtable.c"
+
+extern int mydebug;
+extern int line;
+int regs[26];
+int base, debugsw;
+int dex = 0;
+//int taddr;
+void yyerror (s)  /* Called by yyparse on error */
+     char *s;
+{
+  printf ("%s line: %d\n", s, line);
+}
+
+
+%}
+/*  defines the start symbol, what values come back from LEX and how the operators are associated  */
+
+%start program
+
+%union{
+ int value;
+ char* string;
+}
+
+%token <value> NUM
+%token <string> ID
+%token INT
+%token IF
+%token ELSE
+%token WHILE
+%token VOID
+%token RETURN
+%token READ
+%token WRITE
+%token LT
+%token GT
+%token LE
+%token GE
+%token EQ
+%token NE
+
+
+%left '|'
+%left '&'
+%left '+' '-'
+%left '*' '/' '%'
+%left UMINUS
+
+
+%%	/* end specs, begin rules */
+
+program			: 	decL {program = $1;}
+			;
+
+decL			:	decL dec {$$ = $1;}
+			| 	dec {$1->s1 = $2; $$ = $1}
+			;
+
+dec			:	varDec{$$=$1;}
+			|	funDec
+			; 
+
+varDec			:	typeSpec ID ';'
+			|	typeSpec ID '[' NUM ']' ';'
+			;
+
+funDec			:	typeSpec ID '(' params ')' compStmt
+			;
+
+typeSpec		:	INT
+			|	VOID
+			;
+
+params			:	VOID
+			|	paramList
+			;
+
+paramList		:	param
+			|	paramList ',' param
+			;
+
+param			:	typeSpec ID
+			|	typeSpec ID '['']'
+			;
+
+compStmt		:	'{' locDec stmtList '}'
+			;
+
+locDec			:	/* empty */
+			|	locDec varDec 
+			;
+
+stmtList		:	/* empty */
+			|	stmtList statement
+			;
+
+statement		:	exprStmt
+			|	compStmt
+			|	selectStmt
+			|	iterStmt
+			|	assignStmt
+			|	retStmt
+			|	readStmt
+			|	writeStmt
+			;
+
+exprStmt		:	expression ';'
+			|	';'
+			;
+
+selectStmt		:	IF '(' expression ')' statement ELSE statement
+			|	IF '(' expression ')' statement
+			;
+
+iterStmt		:	WHILE '(' expression ')' statement
+			;
+
+assignStmt		:	var '=' expression ';'
+			;
+
+retStmt			:	RETURN ';'
+			|	RETURN expression ';'
+			;
+
+readStmt		:	READ var ';'
+			;
+
+writeStmt		:	WRITE expression ';'
+			;
+
+expression		:	smplExpr	
+			;
+
+var			:	ID
+			|	ID  '[' expression ']'
+			;
+
+smplExpr		:	additExpr
+			|	smplExpr relop additExpr
+			;
+
+relop			:	LE
+			|	LT
+			|	GT
+			|	GE
+			|	EQ
+			|	NE
+			;
+
+additExpr		:	term
+			|	additExpr addop term
+			;
+
+addop			:	'+'
+			|	'-'
+			;
+term			: 	factor
+			|	term multop factor
+			;
+
+multop			:	'*'
+			|	'/'
+			;
+
+factor			:	'(' expression ')'
+			|	NUM
+			|	var
+			|	call
+			;
+
+call			:	ID '(' args ')'
+			;
+
+args			:	/* empty */
+			|	argList
+			;
+
+argList			:	expression
+			|	argList ',' expression
+			;
+%%	/* end of rules, start of program */
+
+main()
+{ yyparse();
+}
