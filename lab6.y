@@ -60,7 +60,8 @@ void yyerror (s)  /* Called by yyparse on error */
 %type <node> returnstmt writestmt localdeclarations
 %type <node> factor term expression simpleexpression additiveexpression
 %type <node> call args arglist params param paramlist
-%type <node> statement DEC IFELSE
+%type <node> statement DEC IFELSE RETVAL ISARRAY ARGNEXT PARAMNEXT DLNEXT
+%type <value> VARISARRAYDEC PARAMISARRAY
 %type <operator> relop addop multop typespec
 
 %left '|'
@@ -76,35 +77,41 @@ P	:	DL   /* PRogram -> Declartion-list */
                 {program=$1;}
 	;
 
-DL	:	DEC  { $$=$1;}   /*  Declaration-list -> Declaration { Declaration} */
-        |      DEC DL   {
+DL	:	DEC DLNEXT { /*  Declaration-list -> Declaration { Declaration} */
+			/*Performed Left Factor Removal*/
 			$1->next=$2;
-			$$ = $1; /*left connect declarations */
+			$$=$1; /*left connect declarations */
                         if (mydebug) ASTprint(0,$1);
                         if (mydebug) ASTprint(0,$2);
 			}
         ;
+	/*Created DLNEXT during Left Factor Removal of DL*/
+DLNEXT	: DL	{$$=$1;}
+	| /*empty*/	{$$=NULL;}
+	;
 
 DEC	: VARDEC  {$$=$1;} 
         | FUNDEC  {$$=$1;} /*  Declaration -> Variable-Declaration | Function-Declaration */
         ;
 
-VARDEC	: typespec ID  ';' { /* search symbol table for ID
-                                insert if OK, then add the pointer from 
-                                insertion into the  ASTnode to have reference
-                                to the symbol table entry */
-                            $$=ASTCreateNode(VARDEC); 
-                            $$->name=$2; /* this changes to symbol table*/
-                           } 
- 	| typespec ID  '[' NUM ']' ';'
-                  { /* search symbol table for ID, if not, place in there with size of array*/
-                            $$=ASTCreateNode(VARDEC); 
-			    $$->operator=$1;
-                            $$->name=$2; /* this changes to symbol table*/
-                            $$->value=$4; /* remember dimension*/
-                            printf("found an array declaration \n");
-                  }         
+VARDEC	: typespec ID  VARISARRAYDEC ';' { 
+	/* 	search symbol table for ID
+		insert if OK, then add the pointer from 
+		insertion into the  ASTnode to have reference
+		to the symbol table entry
+	*/
+	/*Performed Left Factor removal*/
+	$$=ASTCreateNode(VARDEC); 
+	$$->datatype=$1;
+	$$->name=$2; /* this changes to symbol table*/
+	$$->value= $3;                           
+	}       
         ;
+
+		/*Created VARISARRAYDEC during Left Factor Removal of VARDEC*/
+VARISARRAYDEC	: '[' NUM ']'{ $$=$2;}
+		| /*empty*/{$$=0;}
+		;
 
 typespec	: INT {$$=INTTYPE;}
                 | VOID {$$=VOIDTYPE;}
@@ -119,10 +126,11 @@ FUNDEC	:  typespec ID '(' params ')' compoundstmt{
 		/* need to add paramater listing */
 		
 		$$=ASTCreateNode(FUNCTIONDEC);
+		$$->datatype = $1;
 		$$->name=$2; /* this changes to symbol table*/
 		$$->s1 = $4;		
 		$$->s2 = $6; /* compound statement */
-		printf("Function declaration found.\n");		
+		/*printf("Function declaration found.\n");*/		
 		} 
         ;
 
@@ -134,32 +142,36 @@ params	: VOID	{
 		}
         ;
 
-paramlist	: param {$$=$1;}
-                | param ',' paramlist{
-			$1->next = $3;
+paramlist	: param PARAMNEXT{
+			/*performed left factor removal*/
+			$1->next = $2;
 			$$ = $1;
 			}  
               	;
 
-param	:	typespec ID{
-			$$=ASTCreateNode(PARAM);
-			$$->operator= $1;
-			$$->name = $2;
-		
-		}
-	|	typespec ID '[' NUM ']'{
-			$$=ASTCreateNode(PARAM);
-			$$->operator = $1;
-			$$->name = $2;
-			//...
-		}
-	;
+		/*PARAMNEXT create during left factor removal of paramlist*/
+PARAMNEXT	: ',' paramlist { $$=$2;}
+		|/*empty*/ {$$=NULL;}
+		;
 
-   /* need to fix this to include local declarations into symbol table*/
+param	: typespec ID PARAMISARRAY{
+		/*Performed Left Factor removal*/
+		$$=ASTCreateNode(PARAM);
+		$$->datatype = $1;
+		$$->name = $2;
+		$$->value = $3;
+		//...
+	}
+	;
+		/*Created during Left Factor removal on param*/
+PARAMISARRAY	: '[' NUM ']' {$$=$2;}
+		| /*empty*/ {$$=0;}
+		;
+
 compoundstmt	: '{' localdeclarations statementlist '}'{
 			$$=ASTCreateNode(BLOCK);
-                        $$->left=$2;
-			$$->right=$3;
+                        $$->s1=$2;
+			$$->s2=$3;
                         }
  	      	;
 
@@ -170,7 +182,6 @@ localdeclarations 	:  VARDEC localdeclarations {
                   	| /* empty */ {$$=NULL;}
 			;
 
-/* for statements , left is the next statement, right is what this statement is */
 statementlist 	:  /* empty */ {$$=NULL;}
               	| statement statementlist{
 			$1->next= $2;
@@ -190,7 +201,7 @@ statement	: expressionstmt	{$$=$1;}
 
 expressionstmt 	: expression ';'  {
 			$$=ASTCreateNode(EXPRSTMT);
-                        $$->right=$1;
+                        $$->s1=$1;
 			}
 		| ';'  { $$=NULL;}
  		;
@@ -205,15 +216,16 @@ assignmentstmt 	: var '=' expressionstmt {
                	;
 
 selectionstmt	: IF '(' expression ')' statement IFELSE{
+			/*Performed Left Factor removal*/			
 			$$=ASTCreateNode(IFSTMT);
                         $$->s1=$3;
 			$$->s2=$5;
 			$$->s3=$6;
                 	}
              	;
-
+		/*Created IFELSE during Left Factor removal on selectionstmt*/
 IFELSE		: /*empty*/  { $$=NULL; }
-		| statement  { $$=$1; }
+		| ELSE statement  { $$=$2; }
 		;
 
 iterationstmt	: WHILE '(' expression ')' statement{
@@ -223,12 +235,16 @@ iterationstmt	: WHILE '(' expression ')' statement{
 			}
                	;
 
-returnstmt 	: RETURN ';'  { $$=ASTCreateNode(RETURNSTMT);}
-            	| RETURN expression  ';'{
-			$$=ASTCreateNode(RETURN);
+returnstmt 	: RETURN RETVAL  {
+			/*Performed Left Factor removal*/
+			$$=ASTCreateNode(RETURNSTMT);
 			$$->s1=$2;
-		     	}              
-            	;
+			}
+		; 
+	/*Created REVAL during Left Factor removal on returnstmt*/
+RETVAL	: expression ';' {$$=$1;}
+	| ';' { $$=NULL; }
+	;
 
 readstmt : READ var ';' { /* make sure variable is in symbol table */
                           /*  Create a ASTnode for this statement on the right */
@@ -246,34 +262,31 @@ writestmt : WRITE expression ';' { /* make sure variable is in symbol table */
 				}
           ;
 
-
 expression :   simpleexpression {$$=$1;}
            ;
 
-
-var	: ID	{
-			$$=ASTCreateNode(IDENT);
-			$$->name = $1;
-		}
-                /* we want to create a NODE called IDENTIFIER with a pointer to the SYMBOL table */
-                 
-	| ID  '[' expression ']'{
+var	: ID ISARRAY{
+		/*Performed Left Factor removal*/
 		$$=ASTCreateNode(IDENT);
-	        $$->name=$1; /*change this to pointer to symbol table */
-		$$->s1=$3;
-		}
+		$$->name = $1;
+		$$->s1 = $2;		
+	}
+                /* we want to create a NODE called IDENTIFIER with a pointer to the SYMBOL table */
     	;
+	/*Created ISARRAY during Left Factor removal on var*/
+ISARRAY	: '[' expression ']'{ $$=$2; }
+	| /*empty*/ {$$=NULL;}
+	;
 
 
-simpleexpression	: additiveexpression  {$$=$1;}
-                 	| additiveexpression relop additiveexpression {
-				$$=ASTCreateNode(EXPR);
-	                        $$->left=$1;
-       	 	                $$->right=$3;
-                	        $$->operator=$2;
-				}
-                  	;
-
+simpleexpression: additiveexpression  {$$=$1;}
+		| simpleexpression relop additiveexpression {
+			$$=ASTCreateNode(EXPR);
+			$$->left=$1;
+			$$->right=$3;
+			$$->operator=$2;
+		}
+		;
 
 relop 	: LE  {$$=LESSTHANEQUAL;}
       	| LT  {$$=LESSTHAN;}
@@ -284,12 +297,12 @@ relop 	: LE  {$$=LESSTHANEQUAL;}
       	;
 
 additiveexpression	: term  {$$=$1;}
-                    	| term  addop additiveexpression{
+                    	| additiveexpression  addop term{
 				$$=ASTCreateNode(EXPR);
 				$$->left=$1;
 				$$->operator=$2;
 				$$->right=$3;
-				}
+			}
                     	;
 
 addop 	: '+'  {$$=PLUS;}
@@ -297,7 +310,7 @@ addop 	: '+'  {$$=PLUS;}
       	;
 
 term	: factor{$$=$1;}
-     	| factor  multop term{
+     	| term  multop factor{
 		$$=ASTCreateNode(EXPR);
 		$$->left=$1;
 		$$->right=$3;
@@ -311,8 +324,8 @@ multop 	: '*' {$$=TIMES;}
 
 factor 	: '(' expression ')'  {$$=$2;}
       	| NUM  {
-			$$=ASTCreateNode(NUMBER);
-                	$$->value=$1;
+		$$=ASTCreateNode(NUMBER);
+                $$->value=$1;
 		}
        	| var  { $$=$1;}
        	| call { $$=$1;}
@@ -329,14 +342,17 @@ args 	: arglist {$$=$1;}
       	| {$$=NULL;} /* empty */
      	;
 
-arglist 	: expression  {$$=$1;}
-         	| expression ',' arglist {
-            		$$=ASTCreateNode(ARGLIST);
-            		$$->s1=$1;
-            		$$->next=$3;
-           		}
-         	;
-
+arglist : expression ARGNEXT{
+		/*Performed Left Factor removal*/
+		$$=ASTCreateNode(ARGLIST);
+		$$->s1=$1;
+		$$->next=$2;
+	}
+        ;
+	/*Created during Left Factor removal on arglist*/
+ARGNEXT	: ',' arglist { $$=$2;}
+	| /*empty*/ { $$=NULL;}
+	;
 
 %%	/* end of rules, start of program */
 main(int argv, char * argc[])

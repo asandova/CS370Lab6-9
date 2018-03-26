@@ -1,6 +1,6 @@
 all: LAB6
 
-LAB6: YACC AST.o
+LAB6: YACC AST.o symtable.o
 	gcc y.tab.c lex.yy.c symtable.o AST.o -o Lab6
 
 YACC: LEX

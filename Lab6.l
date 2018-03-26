@@ -7,7 +7,7 @@
 */
 %{
 
-int mydebug=1;
+int mydebug=0;
 int linecount = 1;
 #include "AST.h"
 #include "y.tab.h"
@@ -16,8 +16,8 @@ int linecount = 1;
 
 %%
 while			{if (mydebug) fprintf(stderr,"WHILE found\n"); 
-
 				return (WHILE);}
+
 if			{if (mydebug) fprintf(stderr,"IF found\n"); 
 				return (IF);}
 
@@ -42,7 +42,7 @@ return			{if (mydebug) fprintf(stderr,"RETURN found\n");
 "<"			{if (mydebug) fprintf(stderr,"LESS THAN found\n"); 
 				return (LT);}
 
-">"			{if (mydebug) fprintf(stderr,"GREATERT HAN found\n"); 
+">"			{if (mydebug) fprintf(stderr,"GREATERT THAN found\n"); 
 				return (GT);}
 
 "<="			{if (mydebug) fprintf(stderr,"LESS EQUAL found\n"); 
@@ -57,7 +57,7 @@ return			{if (mydebug) fprintf(stderr,"RETURN found\n");
 "=="			{if (mydebug) fprintf(stderr,"EQUAL found\n"); 
 				return (EQ);}
 
-[a-zA-Z][a-zA-Z]*	{if (mydebug) fprintf(stderr,"ID found\n"); 
+[a-zA-Z][a-zA-Z0-9]*	{if (mydebug) fprintf(stderr,"ID found\n"); 
                        		yylval.string=strdup(yytext); return(ID);}
 
 [0-9][0-9]*		{if (mydebug) fprintf(stderr,"NUMBER found\n"); 

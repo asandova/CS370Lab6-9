@@ -6,10 +6,12 @@ int main(void)
   { 
     int y;
     while (x+5/2 <= 2+z-5)
-      if (h-2 >= 3-2) 
+      if (h-2 >= 3-2){ 
           read x[100];
-      else
+	}
+      else{
          write x[100] + 200;
+   	} 
     f(3+x[x[100]], bar+200, 20);
     return ;
     return x+5+7;

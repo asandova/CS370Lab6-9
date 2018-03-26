@@ -21,8 +21,7 @@ enum ASTtype {
 	CALL,
 	ARGLIST,
 	BLOCK,
-	PARAM,
-	STMTLIST
+	PARAM
 };
 
 
@@ -44,6 +43,7 @@ typedef struct ASTnodetype
      enum ASTtype type;
      enum OPERATORS operator;
      char * name;
+     enum ASTtype datatype;/*Added a field for variable data type and Function return type*/
      int value;
      struct SymbTab *node;
      struct ASTnodetype *next,*left,*right; /* left is usually the connector for statements */

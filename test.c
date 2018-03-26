@@ -1,14 +1,9 @@
 int a;
 int A;
 int array[50];
-int main(void){
-	int b;
-	int B;
-	b = b + B;
-}
-
-int testing( int a, int A){
-
-	int b;
-	int B;
+int main(void){.
+	t(a, asd[5]);
+	c();
+	return array[2 + A];
+	return ;
 }
