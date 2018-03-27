@@ -1,3 +1,9 @@
+/*
+*	Class: CS370
+*	Lab: 6
+*	Author: August B. Sandoval
+*	File: AST.h
+*/
 #ifndef AST_H
 #define AST_H
 #include "symtable.h"

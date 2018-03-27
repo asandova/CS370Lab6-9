@@ -94,7 +94,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 2058 of yacc.c  */
-#line 47 "lab6.y"
+#line 53 "lab6.y"
 
       int value;
       char * string;

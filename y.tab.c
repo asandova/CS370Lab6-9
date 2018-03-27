@@ -87,6 +87,12 @@
    Shaun Cooper
     January 2015
 
+   Edited by: August B. Sandoval
+   Class: CS370
+   File: lab6.y
+   Lab: 6
+   Last Edit: Mar 25, 2018  
+
 */
 
 
@@ -107,7 +113,7 @@ void yyerror (s)  /* Called by yyparse on error */
 
 
 /* Line 371 of yacc.c  */
-#line 111 "y.tab.c"
+#line 117 "y.tab.c"
 
 # ifndef YY_NULL
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -191,7 +197,7 @@ extern int yydebug;
 typedef union YYSTYPE
 {
 /* Line 387 of yacc.c  */
-#line 47 "lab6.y"
+#line 53 "lab6.y"
 
       int value;
       char * string;
@@ -201,7 +207,7 @@ typedef union YYSTYPE
 
 
 /* Line 387 of yacc.c  */
-#line 205 "y.tab.c"
+#line 211 "y.tab.c"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
@@ -229,7 +235,7 @@ int yyparse ();
 /* Copy the second part of user declarations.  */
 
 /* Line 390 of yacc.c  */
-#line 233 "y.tab.c"
+#line 239 "y.tab.c"
 
 #ifdef short
 # undef short
@@ -543,14 +549,14 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    76,    76,    80,    89,    90,    93,    94,    97,   112,
-     113,   116,   117,   120,   137,   140,   145,   153,   154,   157,
-     167,   168,   171,   178,   182,   185,   186,   192,   193,   194,
-     195,   196,   197,   198,   199,   202,   206,   209,   218,   227,
-     228,   231,   238,   245,   246,   249,   258,   265,   268,   277,
-     278,   282,   283,   291,   292,   293,   294,   295,   296,   299,
-     300,   308,   309,   312,   313,   321,   322,   325,   326,   330,
-     331,   334,   341,   342,   345,   353,   354
+       0,    82,    82,    86,    95,    96,    99,   100,   103,   118,
+     119,   122,   123,   126,   143,   146,   151,   159,   160,   163,
+     173,   174,   177,   184,   188,   191,   192,   198,   199,   200,
+     201,   202,   203,   204,   205,   208,   212,   215,   224,   233,
+     234,   237,   244,   251,   252,   255,   264,   271,   274,   283,
+     284,   288,   289,   297,   298,   299,   300,   301,   302,   305,
+     306,   314,   315,   318,   319,   327,   328,   331,   332,   336,
+     337,   340,   347,   348,   351,   359,   360
 };
 #endif
 
@@ -1530,13 +1536,13 @@ yyreduce:
     {
         case 2:
 /* Line 1792 of yacc.c  */
-#line 77 "lab6.y"
+#line 83 "lab6.y"
     {program=(yyvsp[(1) - (1)].node);}
     break;
 
   case 3:
 /* Line 1792 of yacc.c  */
-#line 80 "lab6.y"
+#line 86 "lab6.y"
     { /*  Declaration-list -> Declaration { Declaration} */
 			/*Performed Left Factor Removal*/
 			(yyvsp[(1) - (2)].node)->next=(yyvsp[(2) - (2)].node);
@@ -1548,31 +1554,31 @@ yyreduce:
 
   case 4:
 /* Line 1792 of yacc.c  */
-#line 89 "lab6.y"
+#line 95 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 5:
 /* Line 1792 of yacc.c  */
-#line 90 "lab6.y"
+#line 96 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 6:
 /* Line 1792 of yacc.c  */
-#line 93 "lab6.y"
+#line 99 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 7:
 /* Line 1792 of yacc.c  */
-#line 94 "lab6.y"
+#line 100 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 8:
 /* Line 1792 of yacc.c  */
-#line 97 "lab6.y"
+#line 103 "lab6.y"
     { 
 	/* 	search symbol table for ID
 		insert if OK, then add the pointer from 
@@ -1589,31 +1595,31 @@ yyreduce:
 
   case 9:
 /* Line 1792 of yacc.c  */
-#line 112 "lab6.y"
+#line 118 "lab6.y"
     { (yyval.value)=(yyvsp[(2) - (3)].value);}
     break;
 
   case 10:
 /* Line 1792 of yacc.c  */
-#line 113 "lab6.y"
+#line 119 "lab6.y"
     {(yyval.value)=0;}
     break;
 
   case 11:
 /* Line 1792 of yacc.c  */
-#line 116 "lab6.y"
+#line 122 "lab6.y"
     {(yyval.operator)=INTTYPE;}
     break;
 
   case 12:
 /* Line 1792 of yacc.c  */
-#line 117 "lab6.y"
+#line 123 "lab6.y"
     {(yyval.operator)=VOIDTYPE;}
     break;
 
   case 13:
 /* Line 1792 of yacc.c  */
-#line 120 "lab6.y"
+#line 126 "lab6.y"
     { 
 		/* search symbol table for ID
 		   insert if OK, then add the pointer from 
@@ -1633,7 +1639,7 @@ yyreduce:
 
   case 14:
 /* Line 1792 of yacc.c  */
-#line 137 "lab6.y"
+#line 143 "lab6.y"
     {
 		(yyval.node)=NULL;			
 		}
@@ -1641,7 +1647,7 @@ yyreduce:
 
   case 15:
 /* Line 1792 of yacc.c  */
-#line 140 "lab6.y"
+#line 146 "lab6.y"
     {
 		(yyval.node)=(yyvsp[(1) - (1)].node);
 		}
@@ -1649,7 +1655,7 @@ yyreduce:
 
   case 16:
 /* Line 1792 of yacc.c  */
-#line 145 "lab6.y"
+#line 151 "lab6.y"
     {
 			/*performed left factor removal*/
 			(yyvsp[(1) - (2)].node)->next = (yyvsp[(2) - (2)].node);
@@ -1659,19 +1665,19 @@ yyreduce:
 
   case 17:
 /* Line 1792 of yacc.c  */
-#line 153 "lab6.y"
+#line 159 "lab6.y"
     { (yyval.node)=(yyvsp[(2) - (2)].node);}
     break;
 
   case 18:
 /* Line 1792 of yacc.c  */
-#line 154 "lab6.y"
+#line 160 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 19:
 /* Line 1792 of yacc.c  */
-#line 157 "lab6.y"
+#line 163 "lab6.y"
     {
 		/*Performed Left Factor removal*/
 		(yyval.node)=ASTCreateNode(PARAM);
@@ -1684,19 +1690,19 @@ yyreduce:
 
   case 20:
 /* Line 1792 of yacc.c  */
-#line 167 "lab6.y"
+#line 173 "lab6.y"
     {(yyval.value)=(yyvsp[(2) - (3)].value);}
     break;
 
   case 21:
 /* Line 1792 of yacc.c  */
-#line 168 "lab6.y"
+#line 174 "lab6.y"
     {(yyval.value)=0;}
     break;
 
   case 22:
 /* Line 1792 of yacc.c  */
-#line 171 "lab6.y"
+#line 177 "lab6.y"
     {
 			(yyval.node)=ASTCreateNode(BLOCK);
                         (yyval.node)->s1=(yyvsp[(2) - (4)].node);
@@ -1706,7 +1712,7 @@ yyreduce:
 
   case 23:
 /* Line 1792 of yacc.c  */
-#line 178 "lab6.y"
+#line 184 "lab6.y"
     {
 				(yyvsp[(1) - (2)].node)->next=(yyvsp[(2) - (2)].node);
 				(yyval.node)=(yyvsp[(1) - (2)].node);
@@ -1715,19 +1721,19 @@ yyreduce:
 
   case 24:
 /* Line 1792 of yacc.c  */
-#line 182 "lab6.y"
+#line 188 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 25:
 /* Line 1792 of yacc.c  */
-#line 185 "lab6.y"
+#line 191 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 26:
 /* Line 1792 of yacc.c  */
-#line 186 "lab6.y"
+#line 192 "lab6.y"
     {
 			(yyvsp[(1) - (2)].node)->next= (yyvsp[(2) - (2)].node);
 			(yyval.node) = (yyvsp[(1) - (2)].node);		
@@ -1736,55 +1742,55 @@ yyreduce:
 
   case 27:
 /* Line 1792 of yacc.c  */
-#line 192 "lab6.y"
+#line 198 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 28:
 /* Line 1792 of yacc.c  */
-#line 193 "lab6.y"
+#line 199 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 29:
 /* Line 1792 of yacc.c  */
-#line 194 "lab6.y"
+#line 200 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 30:
 /* Line 1792 of yacc.c  */
-#line 195 "lab6.y"
+#line 201 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 31:
 /* Line 1792 of yacc.c  */
-#line 196 "lab6.y"
+#line 202 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 32:
 /* Line 1792 of yacc.c  */
-#line 197 "lab6.y"
+#line 203 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 33:
 /* Line 1792 of yacc.c  */
-#line 198 "lab6.y"
+#line 204 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 34:
 /* Line 1792 of yacc.c  */
-#line 199 "lab6.y"
+#line 205 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 35:
 /* Line 1792 of yacc.c  */
-#line 202 "lab6.y"
+#line 208 "lab6.y"
     {
 			(yyval.node)=ASTCreateNode(EXPRSTMT);
                         (yyval.node)->s1=(yyvsp[(1) - (2)].node);
@@ -1793,13 +1799,13 @@ yyreduce:
 
   case 36:
 /* Line 1792 of yacc.c  */
-#line 206 "lab6.y"
+#line 212 "lab6.y"
     { (yyval.node)=NULL;}
     break;
 
   case 37:
 /* Line 1792 of yacc.c  */
-#line 209 "lab6.y"
+#line 215 "lab6.y"
     {
 			(yyval.node)=ASTCreateNode(ASSIGN);
                           /* Assignment statement  we leave left alone so that
@@ -1811,7 +1817,7 @@ yyreduce:
 
   case 38:
 /* Line 1792 of yacc.c  */
-#line 218 "lab6.y"
+#line 224 "lab6.y"
     {
 			/*Performed Left Factor removal*/			
 			(yyval.node)=ASTCreateNode(IFSTMT);
@@ -1823,19 +1829,19 @@ yyreduce:
 
   case 39:
 /* Line 1792 of yacc.c  */
-#line 227 "lab6.y"
+#line 233 "lab6.y"
     { (yyval.node)=NULL; }
     break;
 
   case 40:
 /* Line 1792 of yacc.c  */
-#line 228 "lab6.y"
+#line 234 "lab6.y"
     { (yyval.node)=(yyvsp[(2) - (2)].node); }
     break;
 
   case 41:
 /* Line 1792 of yacc.c  */
-#line 231 "lab6.y"
+#line 237 "lab6.y"
     {
 			(yyval.node)=ASTCreateNode(WHILESTMT);
 			(yyval.node)->s1=(yyvsp[(3) - (5)].node);
@@ -1845,7 +1851,7 @@ yyreduce:
 
   case 42:
 /* Line 1792 of yacc.c  */
-#line 238 "lab6.y"
+#line 244 "lab6.y"
     {
 			/*Performed Left Factor removal*/
 			(yyval.node)=ASTCreateNode(RETURNSTMT);
@@ -1855,19 +1861,19 @@ yyreduce:
 
   case 43:
 /* Line 1792 of yacc.c  */
-#line 245 "lab6.y"
+#line 251 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (2)].node);}
     break;
 
   case 44:
 /* Line 1792 of yacc.c  */
-#line 246 "lab6.y"
+#line 252 "lab6.y"
     { (yyval.node)=NULL; }
     break;
 
   case 45:
 /* Line 1792 of yacc.c  */
-#line 249 "lab6.y"
+#line 255 "lab6.y"
     { /* make sure variable is in symbol table */
                           /*  Create a ASTnode for this statement on the right */
                             (yyval.node)=ASTCreateNode(READSTMT);
@@ -1878,7 +1884,7 @@ yyreduce:
 
   case 46:
 /* Line 1792 of yacc.c  */
-#line 258 "lab6.y"
+#line 264 "lab6.y"
     { /* make sure variable is in symbol table */
                           /*  Create a ASTnode for this statement on the right */
 				(yyval.node)=ASTCreateNode(WRITESTMT);
@@ -1888,13 +1894,13 @@ yyreduce:
 
   case 47:
 /* Line 1792 of yacc.c  */
-#line 265 "lab6.y"
+#line 271 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 48:
 /* Line 1792 of yacc.c  */
-#line 268 "lab6.y"
+#line 274 "lab6.y"
     {
 		/*Performed Left Factor removal*/
 		(yyval.node)=ASTCreateNode(IDENT);
@@ -1905,25 +1911,25 @@ yyreduce:
 
   case 49:
 /* Line 1792 of yacc.c  */
-#line 277 "lab6.y"
+#line 283 "lab6.y"
     { (yyval.node)=(yyvsp[(2) - (3)].node); }
     break;
 
   case 50:
 /* Line 1792 of yacc.c  */
-#line 278 "lab6.y"
+#line 284 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 51:
 /* Line 1792 of yacc.c  */
-#line 282 "lab6.y"
+#line 288 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 52:
 /* Line 1792 of yacc.c  */
-#line 283 "lab6.y"
+#line 289 "lab6.y"
     {
 			(yyval.node)=ASTCreateNode(EXPR);
 			(yyval.node)->left=(yyvsp[(1) - (3)].node);
@@ -1934,49 +1940,49 @@ yyreduce:
 
   case 53:
 /* Line 1792 of yacc.c  */
-#line 291 "lab6.y"
+#line 297 "lab6.y"
     {(yyval.operator)=LESSTHANEQUAL;}
     break;
 
   case 54:
 /* Line 1792 of yacc.c  */
-#line 292 "lab6.y"
+#line 298 "lab6.y"
     {(yyval.operator)=LESSTHAN;}
     break;
 
   case 55:
 /* Line 1792 of yacc.c  */
-#line 293 "lab6.y"
+#line 299 "lab6.y"
     {(yyval.operator)=GREATERTHAN;}
     break;
 
   case 56:
 /* Line 1792 of yacc.c  */
-#line 294 "lab6.y"
+#line 300 "lab6.y"
     {(yyval.operator)=GREATERTHANEQUAL;}
     break;
 
   case 57:
 /* Line 1792 of yacc.c  */
-#line 295 "lab6.y"
+#line 301 "lab6.y"
     {(yyval.operator)=EQUAL;}
     break;
 
   case 58:
 /* Line 1792 of yacc.c  */
-#line 296 "lab6.y"
+#line 302 "lab6.y"
     {(yyval.operator)=NOTEQUAL;}
     break;
 
   case 59:
 /* Line 1792 of yacc.c  */
-#line 299 "lab6.y"
+#line 305 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 60:
 /* Line 1792 of yacc.c  */
-#line 300 "lab6.y"
+#line 306 "lab6.y"
     {
 				(yyval.node)=ASTCreateNode(EXPR);
 				(yyval.node)->left=(yyvsp[(1) - (3)].node);
@@ -1987,25 +1993,25 @@ yyreduce:
 
   case 61:
 /* Line 1792 of yacc.c  */
-#line 308 "lab6.y"
+#line 314 "lab6.y"
     {(yyval.operator)=PLUS;}
     break;
 
   case 62:
 /* Line 1792 of yacc.c  */
-#line 309 "lab6.y"
+#line 315 "lab6.y"
     {(yyval.operator)=MINUS;}
     break;
 
   case 63:
 /* Line 1792 of yacc.c  */
-#line 312 "lab6.y"
+#line 318 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 64:
 /* Line 1792 of yacc.c  */
-#line 313 "lab6.y"
+#line 319 "lab6.y"
     {
 		(yyval.node)=ASTCreateNode(EXPR);
 		(yyval.node)->left=(yyvsp[(1) - (3)].node);
@@ -2016,25 +2022,25 @@ yyreduce:
 
   case 65:
 /* Line 1792 of yacc.c  */
-#line 321 "lab6.y"
+#line 327 "lab6.y"
     {(yyval.operator)=TIMES;}
     break;
 
   case 66:
 /* Line 1792 of yacc.c  */
-#line 322 "lab6.y"
+#line 328 "lab6.y"
     {(yyval.operator)=DIVIDE;}
     break;
 
   case 67:
 /* Line 1792 of yacc.c  */
-#line 325 "lab6.y"
+#line 331 "lab6.y"
     {(yyval.node)=(yyvsp[(2) - (3)].node);}
     break;
 
   case 68:
 /* Line 1792 of yacc.c  */
-#line 326 "lab6.y"
+#line 332 "lab6.y"
     {
 		(yyval.node)=ASTCreateNode(NUMBER);
                 (yyval.node)->value=(yyvsp[(1) - (1)].value);
@@ -2043,19 +2049,19 @@ yyreduce:
 
   case 69:
 /* Line 1792 of yacc.c  */
-#line 330 "lab6.y"
+#line 336 "lab6.y"
     { (yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 70:
 /* Line 1792 of yacc.c  */
-#line 331 "lab6.y"
+#line 337 "lab6.y"
     { (yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 71:
 /* Line 1792 of yacc.c  */
-#line 334 "lab6.y"
+#line 340 "lab6.y"
     { 
 			(yyval.node)=ASTCreateNode(CALL);
          		(yyval.node)->s1=(yyvsp[(3) - (4)].node);
@@ -2065,19 +2071,19 @@ yyreduce:
 
   case 72:
 /* Line 1792 of yacc.c  */
-#line 341 "lab6.y"
+#line 347 "lab6.y"
     {(yyval.node)=(yyvsp[(1) - (1)].node);}
     break;
 
   case 73:
 /* Line 1792 of yacc.c  */
-#line 342 "lab6.y"
+#line 348 "lab6.y"
     {(yyval.node)=NULL;}
     break;
 
   case 74:
 /* Line 1792 of yacc.c  */
-#line 345 "lab6.y"
+#line 351 "lab6.y"
     {
 		/*Performed Left Factor removal*/
 		(yyval.node)=ASTCreateNode(ARGLIST);
@@ -2088,19 +2094,19 @@ yyreduce:
 
   case 75:
 /* Line 1792 of yacc.c  */
-#line 353 "lab6.y"
+#line 359 "lab6.y"
     { (yyval.node)=(yyvsp[(2) - (2)].node);}
     break;
 
   case 76:
 /* Line 1792 of yacc.c  */
-#line 354 "lab6.y"
+#line 360 "lab6.y"
     { (yyval.node)=NULL;}
     break;
 
 
 /* Line 1792 of yacc.c  */
-#line 2104 "y.tab.c"
+#line 2110 "y.tab.c"
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2332,7 +2338,7 @@ yyreturn:
 
 
 /* Line 2055 of yacc.c  */
-#line 357 "lab6.y"
+#line 363 "lab6.y"
 	/* end of rules, start of program */
 main(int argv, char * argc[])
 { 

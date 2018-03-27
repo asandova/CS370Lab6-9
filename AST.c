@@ -8,6 +8,11 @@
 
     Shaun Cooper February 2015
 
+    Edited By: August B. Sandoval
+    Class: CS370
+    Lab: 6
+    File: AST.c
+
 */
 
 #include<stdio.h>
@@ -36,7 +41,6 @@ ASTnode *ASTCreateNode(enum ASTtype mytype)
 /* attach q to the left most part of p */
 void ASTattachleft(ASTnode *p,ASTnode *q)
 {
-//... missing
 	p->left = q;
 }
 

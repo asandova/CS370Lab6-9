@@ -531,7 +531,7 @@ char *yytext_ptr;
 /*                 
                 Class: CS 370
 		Assignment: Lab 6
-		Date: January 25, 2015
+		Date: Mar 25, 2018
 		Name: August B. Sandoval
 		File: Lab6.l
 */

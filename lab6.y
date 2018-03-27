@@ -21,6 +21,12 @@
    Shaun Cooper
     January 2015
 
+   Edited by: August B. Sandoval
+   Class: CS370
+   File: lab6.y
+   Lab: 6
+   Last Edit: Mar 25, 2018  
+
 */
 
 
